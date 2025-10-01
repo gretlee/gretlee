@@ -1,0 +1,5 @@
+# Place raw CSV and GeoJSON datasets here
+# Example files:
+# - aqi_data.csv (columns: date, city, pm25, pm10, no2, so2)
+# - energy_data.csv (columns: date, city, consumption_kwh, temperature, population)
+# - flood_risk.geojson (geographical boundaries with elevation and rainfall data)
