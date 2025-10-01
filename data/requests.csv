@@ -1,0 +1,6 @@
+request_id,lat,lon,people,need_type,urgency
+REQ001,33.7077,73.0478,50,water,high
+REQ002,31.5497,74.3436,100,food,medium
+REQ003,24.9056,67.0822,75,tent,high
+REQ004,33.6500,73.1600,30,medical,low
+REQ005,31.4700,74.2700,120,water,medium
