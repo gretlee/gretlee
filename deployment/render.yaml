@@ -1,0 +1,70 @@
+# Render.com Blueprint for Backend Deployment
+# This file configures automatic deployment of the Flask API
+
+services:
+  # Backend API Service
+  - type: web
+    name: urban-sustainability-api
+    env: python
+    region: oregon
+    plan: free
+    branch: main
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "gunicorn --bind 0.0.0.0:$PORT --workers 2 --timeout 120 backend.app:app"
+    healthCheckPath: /api/health
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.0
+      - key: FLASK_ENV
+        value: production
+      - key: PYTHONUNBUFFERED
+        value: 1
+    
+    # Automatic deployment
+    autoDeploy: true
+    
+    # Disk storage for model files (optional)
+    disk:
+      name: model-storage
+      mountPath: /app/ml_models/saved_models
+      sizeGB: 1
+
+# Alternative configuration for multiple services
+# Uncomment if you want to deploy both backend and frontend on Render
+
+# services:
+#   # Backend API
+#   - type: web
+#     name: sustainability-backend
+#     env: python
+#     region: oregon
+#     plan: free
+#     buildCommand: "pip install -r requirements.txt"
+#     startCommand: "gunicorn --bind 0.0.0.0:$PORT backend.app:app"
+#     healthCheckPath: /api/health
+#   
+#   # Frontend
+#   - type: web
+#     name: sustainability-frontend
+#     env: static
+#     region: oregon
+#     plan: free
+#     buildCommand: "cd frontend && npm install && npm run build"
+#     staticPublishPath: frontend/build
+#     routes:
+#       - type: rewrite
+#         source: /*
+#         destination: /index.html
+#     envVars:
+#       - key: REACT_APP_API_URL
+#         fromService:
+#           type: web
+#           name: sustainability-backend
+#           envVarKey: RENDER_EXTERNAL_URL
+
+# Database (if needed in future)
+# databases:
+#   - name: sustainability-db
+#     plan: free
+#     databaseName: sustainability
+#     user: admin
